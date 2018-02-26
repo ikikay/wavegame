@@ -43,8 +43,14 @@ public class Handler {
         this.object.remove(object);
     }
 
-    public void removeAllObject(GameObject object) {
-        this.object.remove(object);
+    public void clearEnemys() {
+        for (int i = 0; i < object.size(); i++){
+            GameObject tempObject = object.get(i);
+            if(tempObject.getId() == ID.Player){
+                object.clear();
+                addObject(new Player(WaveGame.WIDTH / 2 - 32, WaveGame.HEIGHT / 2 - 32, ID.Player, this));
+            }
+        }
     }
     
     public boolean isUp() {

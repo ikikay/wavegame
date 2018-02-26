@@ -36,7 +36,7 @@ public class Trail extends GameObject {
         if (alpha > life) {
             alpha -= (life - 0.001f);
         } else {
-            handler.removeAllObject(this);
+            handler.removeObject(this);
         }
     }
 
