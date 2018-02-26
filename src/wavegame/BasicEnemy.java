@@ -20,8 +20,8 @@ public class BasicEnemy extends GameObject{
         
         Random r = new Random();
 
-        velX = r.nextInt(6) -2;
-        velY = r.nextInt(6) -3;
+        velX = r.nextInt(10) -4;
+        velY = r.nextInt(10) -5;
     }
     
     public void tick(){

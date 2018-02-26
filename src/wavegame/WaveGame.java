@@ -24,6 +24,8 @@ public class WaveGame extends Canvas implements Runnable {
     private Handler handler;
     private Random r;
     private HUD hud;
+    
+    private final double UPDATE_CAP = 1.0 / 60.0;
 
     public WaveGame() {
         handler = new Handler();
@@ -61,32 +63,87 @@ public class WaveGame extends Canvas implements Runnable {
      */
     public void run() {
         this.requestFocus();
-        long lastTime = System.nanoTime();
-        double amountOfTicks = 60.0;
-        double ns = 1000000000 / amountOfTicks;
-        double delta = 0;
-        long timer = System.currentTimeMillis();
+        
+        // Majoolwip
+        running = true;
+        System.out.println("");
+        
+        boolean render = false;
+        double firstTime = 0;
+        double lastTime = System.nanoTime() / 1000000000.0;
+        double passedTime = 0;
+        double unprocessedTime = 0;
+        
+        double frameTime = 0;
         int frames = 0;
-        while (running) {
-            long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
-            lastTime = now;
-            while (delta >= 1) {
+        int fps = 0;
+        
+        while(running){
+            render = false;
+            
+            firstTime = System.nanoTime() / 1000000000.0;
+            passedTime = firstTime - lastTime;
+            lastTime = firstTime;
+            
+            unprocessedTime += passedTime;
+            frameTime += passedTime;
+            
+            while (unprocessedTime >= UPDATE_CAP){
+                unprocessedTime -= UPDATE_CAP;
+                render = true;
+                
+                if(frameTime >= 1.0){
+                    frameTime = 0;
+                    fps = frames;
+                    frames = 0;
+                    
+                    System.out.println("FPS: " + fps);
+                }
+            }
+            
+            if(render){
+                frames ++;
                 tick();
-                delta--;
-            }
-            if (running) {
                 render();
-            }
-            frames++;
-
-            if (System.currentTimeMillis() - timer > 1000) {
-                timer += 1000;
-                System.out.println("FPS: " + frames);
-                frames = 0;
+            } else {
+                try {
+                    Thread.sleep(1);
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }
             }
         }
+        
         stop();
+        
+//        // Code Julian
+//        long lastTime = System.nanoTime();
+//        double amountOfTicks = 60.0;
+//        double ns = 1000000000.0 / amountOfTicks;
+//        double delta = 0;
+//        long timer = System.currentTimeMillis();
+//        int frames = 0;
+//        while (running) {
+//            long now = System.nanoTime();
+//            delta += (now - lastTime) / ns;
+//            lastTime = now;
+//            while (delta >= 1) {
+//                tick();
+//                delta--;
+//            }
+//            if (running) {
+//                frames++;
+//                render();
+//            }
+//            
+//
+//            if (System.currentTimeMillis() - timer > 1000) {
+//                timer += 1000;
+//                System.out.println("FPS: " + frames);
+//                frames = 0;
+//            }
+//        }
+//        stop();
     }
 
     private void tick() {
