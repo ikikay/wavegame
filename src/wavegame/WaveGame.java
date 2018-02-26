@@ -38,7 +38,7 @@ public class WaveGame extends Canvas implements Runnable {
 
         r = new Random();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 5; i++) {
         handler.addObject(new BasicEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.BasicEnemy, handler));
         }
 
@@ -151,6 +151,7 @@ public class WaveGame extends Canvas implements Runnable {
     private void tick() {
         handler.tick();
         hud.tick();
+        spawner.tick();
     }
 
     private void render() {

@@ -14,17 +14,21 @@ import java.util.Random;
  *
  * @author Ikikay
  */
-public class BasicEnemy extends GameObject{
-    Handler handler;
+public class FastEnemy extends GameObject {
+    private Handler handler;
     
-    public BasicEnemy(int x, int y, ID id, Handler handler){
+    public FastEnemy(int x, int y, ID id, Handler handler){
         super(x, y, id);
-        this.handler = handler;
+        this.handler= handler;
         
         Random r = new Random();
 
-        velX = r.nextInt(10) -5;
-        velY = r.nextInt(10) -5;
+        velX = r.nextInt(20) -10;
+        velY = r.nextInt(20) -10;
+    }
+    
+    public Rectangle getBounds(){
+        return new Rectangle(x, y, 16, 16);
     }
     
     public void tick(){
@@ -34,15 +38,11 @@ public class BasicEnemy extends GameObject{
         if(y <= 0 || y >= WaveGame.HEIGHT - 47) velY *= -1;
         if(x <= 0 || x >= WaveGame.WIDTH - 16) velX *= -1;
         
-        //handler.addObject(new Trail(x, y, ID.Trail, Color.pink, 16, 16, 0.02f, handler));
+        //handler.addObject(new Trail(x, y, ID.Trail, Color.red, 16, 16, 0.02f, handler));
     }
     
     public void render(Graphics g){
-        g.setColor(Color.pink);
+        g.setColor(Color.red);
         g.fillRect(x, y, 16, 16);
-    }
-    
-    public Rectangle getBounds(){
-        return new Rectangle(x, y, 16, 16);
     }
 }
