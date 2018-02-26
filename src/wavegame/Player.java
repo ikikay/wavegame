@@ -15,7 +15,9 @@ import java.util.Random;
  * @author Ikikay
  */
 public class Player extends GameObject {
+
     Handler handler;
+
     public Player(int x, int y, ID id, Handler handler) {
         super(x, y, id);
         this.handler = handler;
@@ -30,6 +32,30 @@ public class Player extends GameObject {
         x += velX;
         y += velY;
 
+        if (handler.isUp()) {
+            velY = -5;
+        } else if (!handler.isDown()) {
+            velY = 0;
+        }
+
+        if (handler.isDown()) {
+            velY = 5;
+        } else if (!handler.isUp()) {
+            velY = 0;
+        }
+
+        if (handler.isLeft()) {
+            velX = -5;
+        } else if (!handler.isRight()) {
+            velX = 0;
+        }
+
+        if (handler.isRight()) {
+            velX = 5;
+        } else if (!handler.isLeft()) {
+            velX = 0;
+        }
+
         x = WaveGame.clamp(x, 0, WaveGame.WIDTH - 37);
         y = WaveGame.clamp(y, 0, WaveGame.HEIGHT - 60);
         collision();
@@ -39,16 +65,16 @@ public class Player extends GameObject {
         g.setColor(Color.white);
         g.fillRect(x, y, 32, 32);
     }
-    
-        public Rectangle getBounds(){
+
+    public Rectangle getBounds() {
         return new Rectangle(x, y, 32, 32);
     }
-        
-    public void collision(){
-        for (int i = 0; i < handler.object.size(); i++){
+
+    public void collision() {
+        for (int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
-            if(tempObject.getId() == ID.BasicEnemy){
-                if(getBounds().intersects(tempObject.getBounds())){
+            if (tempObject.getId() == ID.BasicEnemy) {
+                if (getBounds().intersects(tempObject.getBounds())) {
                     HUD.HEALTH -= 2;
                 }
             }

@@ -60,6 +60,7 @@ public class WaveGame extends Canvas implements Runnable {
      * Fonction de run sur 60 FPS trouvé sur internet
      */
     public void run() {
+        this.requestFocus();
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
