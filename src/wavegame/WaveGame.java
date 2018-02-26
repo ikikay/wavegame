@@ -23,20 +23,22 @@ public class WaveGame extends Canvas implements Runnable {
     private boolean running = false;
     private Handler handler;
     private Random r;
+    private HUD hud;
 
     public WaveGame() {
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
 
         new Window(WIDTH, HEIGHT, "Wave Game", this);
+        hud = new HUD();
 
         r = new Random();
 
-        for (int i = 0; i < 5; i++) {
-            handler.addObject(new Player(r.nextInt(WIDTH -32), r.nextInt(HEIGHT - 32), ID.Enemy));
-        }
+        //for (int i = 0; i < 20; i++) {
+        handler.addObject(new BasicEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.BasicEnemy));
+        //}
 
-        handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player));
+        handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
     }
 
     public synchronized void start() {
@@ -88,6 +90,7 @@ public class WaveGame extends Canvas implements Runnable {
 
     private void tick() {
         handler.tick();
+        hud.tick();
     }
 
     private void render() {
@@ -101,6 +104,7 @@ public class WaveGame extends Canvas implements Runnable {
         g.setColor(Color.black);
         g.fillRect(0, 0, WIDTH, HEIGHT);
         handler.render(g);
+        hud.render(g);
         g.dispose();
         bs.show();
     }
@@ -110,5 +114,15 @@ public class WaveGame extends Canvas implements Runnable {
      */
     public static void main(String[] args) {
         new WaveGame();
+    }
+
+    public static int clamp(int position, int min, int max) {
+        if (position >= max) {
+            return position = max;
+        } else if (position <= min) {
+            return position = min;
+        } else {
+            return position;
+        }
     }
 }
