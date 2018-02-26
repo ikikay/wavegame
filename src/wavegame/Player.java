@@ -16,16 +16,12 @@ import java.util.Random;
  */
 public class Player extends GameObject {
 
+    Random r = new Random();
     Handler handler;
 
     public Player(int x, int y, ID id, Handler handler) {
         super(x, y, id);
         this.handler = handler;
-
-        Random r = new Random();
-
-        //velX = r.nextInt(10) -4;
-        //velY = r.nextInt(10) -5;
     }
 
     public void tick() {
@@ -58,6 +54,7 @@ public class Player extends GameObject {
 
         x = WaveGame.clamp(x, 0, WaveGame.WIDTH - 37);
         y = WaveGame.clamp(y, 0, WaveGame.HEIGHT - 60);
+        
         collision();
     }
 

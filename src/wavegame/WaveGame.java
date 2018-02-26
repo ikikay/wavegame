@@ -36,9 +36,9 @@ public class WaveGame extends Canvas implements Runnable {
 
         r = new Random();
 
-        //for (int i = 0; i < 20; i++) {
-        handler.addObject(new BasicEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.BasicEnemy));
-        //}
+        for (int i = 0; i < 20; i++) {
+        handler.addObject(new BasicEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.BasicEnemy, handler));
+        }
 
         handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
     }

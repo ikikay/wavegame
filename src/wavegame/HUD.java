@@ -13,19 +13,22 @@ import java.awt.Graphics;
  * @author Ikikay
  */
 public class HUD {
+
     public static int HEALTH = 100;
-    public void tick(){
+
+    public void tick() {
         HEALTH = WaveGame.clamp(HEALTH, 0, 100);
     }
-    
-    public void render(Graphics g){
-        g.setColor(Color.gray);
-        g.fillRect(15, 15, 200, 32);
-        
-        g.setColor(Color.green);
-        g.fillRect(15, 15, HEALTH *2, 32);
-                
+
+    public void render(Graphics g) {
         g.setColor(Color.white);
-        g.fillRect(15, 15, 200, 32);        
+        g.drawRect(14, 14, 201, 33);
+
+        g.setColor(Color.red);
+        g.fillRect(15, 15, 200, 32);
+
+        g.setColor(Color.green);
+        g.fillRect(15, 15, HEALTH * 2, 32);
+
     }
 }

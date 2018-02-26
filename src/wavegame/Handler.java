@@ -47,7 +47,7 @@ public class Handler {
         this.object.remove(object);
     }
     
-        public boolean isUp() {
+    public boolean isUp() {
         return up;
     }
 
