@@ -8,6 +8,7 @@ package wavegame;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
@@ -31,6 +32,7 @@ public class WaveGame extends Canvas implements Runnable {
     public WaveGame() {
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
+        this.addMouseListener(new MouseInput(handler));
 
         new Window(WIDTH, HEIGHT, "Wave Game", this);
         hud = new HUD();

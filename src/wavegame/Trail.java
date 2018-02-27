@@ -17,7 +17,7 @@ import java.awt.Rectangle;
  */
 public class Trail extends GameObject {
 
-    private float alpha = 1;
+    private float alpha = 1f;
     private float life;
     private Handler handler;
     private Color color;

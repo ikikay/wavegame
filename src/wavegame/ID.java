@@ -11,9 +11,10 @@ package wavegame;
  */
 public enum ID {
     Player(),
-    Trail(),
+    PlayerBullet,
     BasicEnemy(),
     FastEnemy(),
     SmartEnemy(),
-    EnemyBoss();
+    EnemyBoss(),
+    Trail();
 }
