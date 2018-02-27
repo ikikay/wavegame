@@ -15,12 +15,11 @@ import java.awt.Rectangle;
  */
 public class PlayerBullet extends GameObject {
 
-    Handler handler;
-
     public PlayerBullet(float x, float y, ID id, Handler handler, float mx, float my) {
-        super(x, y, id);
-        this.handler = handler;
-        
+        super(x, y, id, handler);
+        this.life = 50;
+        this.dammage = 100;
+
         velX = (mx - x) / 20;
         velY = (my - y) / 20;
         //velX = 10;
@@ -31,7 +30,21 @@ public class PlayerBullet extends GameObject {
         x += velX;
         y += velY;
 
-        if (y >= WaveGame.HEIGHT) {
+        for (int i = 0; i < handler.object.size(); i++) {
+            GameObject tempObject = handler.object.get(i);
+            if ((tempObject.getId() != ID.Player) || (tempObject.getId() != ID.PlayerBullet)) {
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    //handler.removeObject(this);
+                }
+            }
+        }
+
+        if (y <= 0 || y >= WaveGame.HEIGHT - 47 || x <= 0 || x >= WaveGame.WIDTH - 16) {
+            handler.removeObject(this);
+        }
+
+        super.collision();
+        if (life <= 0) {
             handler.removeObject(this);
         }
     }
@@ -45,5 +58,4 @@ public class PlayerBullet extends GameObject {
     public Rectangle getBounds() {
         return new Rectangle((int) x, (int) y, 8, 8);
     }
-
 }

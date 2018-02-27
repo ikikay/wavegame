@@ -15,12 +15,12 @@ import java.awt.Rectangle;
  */
 public class SmartEnemy extends GameObject {
 
-    private Handler handler;
     private GameObject player;
 
     public SmartEnemy(float x, float y, ID id, Handler handler) {
-        super(x, y, id);
-        this.handler = handler;
+        super(x, y, id, handler);
+        this.life = 200;
+        this.dammage = this.life;
 
         for (int i = 0; i < handler.object.size(); i++) {
             if (handler.object.get(i).getId() == ID.Player) {
@@ -48,16 +48,20 @@ public class SmartEnemy extends GameObject {
             velX *= -1;
         }
 
-        //handler.addObject(new Trail(x, y, ID.Trail, Color.ORANGE, 16, 16, 0.02f, handler));
+        //handler.addObject(new Trail(x, y, ID.Trail, Color.ORANGE, 16, 16, 0.02f, handler));z
+        super.collision();
+        if (life <= 0) {
+            handler.removeObject(this);
+        }
     }
 
     public void render(Graphics g) {
         g.setColor(Color.YELLOW);
-        g.fillRect((int)x, (int)y, 16, 16);
+        g.fillRect((int) x, (int) y, 16, 16);
     }
 
     public Rectangle getBounds() {
-        return new Rectangle((int)x, (int)y, 16, 16);
+        return new Rectangle((int) x, (int) y, 16, 16);
     }
 
 }

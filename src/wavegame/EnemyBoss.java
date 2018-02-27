@@ -16,14 +16,15 @@ import java.util.Random;
  */
 public class EnemyBoss extends GameObject {
 
-    private Handler handler;
     Random r = new Random();
     private int timer = 80;
     private int timer2 = 50;
 
     public EnemyBoss(float x, float y, ID id, Handler handler) {
-        super(x, y, id);
-        this.handler = handler;
+        super(x, y, id, handler);
+        this.life = 1000;
+        this.dammage = this.life;
+
         velX = 0;
         velY = 2;
     }
@@ -47,9 +48,9 @@ public class EnemyBoss extends GameObject {
         if (timer2 <= 0) {
             if (velX == 0) {
                 velX = 2;
-            }else if (velX > 0) {
+            } else if (velX > 0) {
                 velX += 0.005f;
-            }else if (velX < 0) {
+            } else if (velX < 0) {
                 velX -= 0.005f;
             }
             velX = WaveGame.clamp(velX, -10, 10);
@@ -60,7 +61,12 @@ public class EnemyBoss extends GameObject {
         }
         if (x <= 0 || x >= WaveGame.WIDTH - 96) {
             velX *= -1;
-        }         
+        }
+
+        super.collision();
+        if (life <= 0) {
+            handler.removeObject(this);
+        }
     }
 
     public void render(Graphics g) {

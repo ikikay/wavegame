@@ -13,18 +13,25 @@ import java.awt.Rectangle;
  * @author Ikikay
  */
 public abstract class GameObject {
-    protected float x,y;
+
+    protected float x, y;
     protected ID id;
+    protected Handler handler;
     protected float velX, velY;
-    
-    public GameObject(float x, float y, ID id){
+    protected int life;
+    protected int dammage;
+
+    public GameObject(float x, float y, ID id, Handler handler) {
         this.x = x;
         this.y = y;
         this.id = id;
+        this.handler = handler;
     }
-    
+
     public abstract void tick();
+
     public abstract void render(Graphics g);
+
     public abstract Rectangle getBounds();
 
     public float getX() {
@@ -66,6 +73,41 @@ public abstract class GameObject {
     public void setVelY(float velY) {
         this.velY = velY;
     }
-    
-    
+
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public int getDammage() {
+        return dammage;
+    }
+
+    public void setDammage(int dammage) {
+        this.dammage = dammage;
+    }
+
+    public void collision() {
+        for (int i = 0; i < handler.object.size(); i++) {
+            GameObject tempObject = handler.object.get(i);
+
+            if (getId() != tempObject.getId()) {
+                if (getId() == ID.Player || getId() == ID.PlayerBullet) {
+                    if (getBounds().intersects(tempObject.getBounds())) {
+                        life = life - tempObject.getDammage();
+                    }
+                } else {
+                    if (tempObject.getId() == ID.Player || tempObject.getId() == ID.PlayerBullet) {
+                        life = life - tempObject.getDammage();
+                    } else if (getBounds().intersects(tempObject.getBounds())) {
+                        velX *= -1;
+                        velY *= -1;
+                    }
+                }
+            }
+        }
+    }
 }

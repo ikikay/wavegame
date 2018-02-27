@@ -41,12 +41,12 @@ public class WaveGame extends Canvas implements Runnable {
         
         r = new Random();
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 15; i++) {
             handler.addObject(new BasicEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.BasicEnemy, handler));
         }
         
         //handler.addObject(new EnemyBoss(WIDTH / 2 - 64, -60, ID.EnemyBoss, handler));
-        handler.addObject(new SmartEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.SmartEnemy, handler));
+        //handler.addObject(new SmartEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.SmartEnemy, handler));
 
     }
 

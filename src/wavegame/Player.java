@@ -17,11 +17,11 @@ import java.util.Random;
 public class Player extends GameObject {
 
     Random r = new Random();
-    Handler handler;
 
     public Player(float x, float y, ID id, Handler handler) {
-        super(x, y, id);
-        this.handler = handler;
+        super(x, y, id, handler);
+        this.life = 100;
+        this.dammage = 0;
     }
 
     public void tick() {
@@ -54,17 +54,17 @@ public class Player extends GameObject {
 
         x = WaveGame.clamp(x, 0, WaveGame.WIDTH - 37);
         y = WaveGame.clamp(y, 0, WaveGame.HEIGHT - 60);
-        
+
         collision();
     }
 
     public void render(Graphics g) {
         g.setColor(Color.white);
-        g.fillRect((int)x, (int)y, 32, 32);
+        g.fillRect((int) x, (int) y, 32, 32);
     }
 
     public Rectangle getBounds() {
-        return new Rectangle((int)x, (int)y, 32, 32);
+        return new Rectangle((int) x, (int) y, 32, 32);
     }
 
     public void collision() {
@@ -74,7 +74,7 @@ public class Player extends GameObject {
                 if (getBounds().intersects(tempObject.getBounds())) {
                     HUD.HEALTH -= 2;
                 }
-            } else if (tempObject.getId() == ID.EnemyBoss){
+            } else if (tempObject.getId() == ID.EnemyBoss) {
                 if (getBounds().intersects(tempObject.getBounds())) {
                     HUD.HEALTH = 0;
                 }

@@ -23,6 +23,8 @@ public class MouseInput extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
         float mx = e.getX();
         float my = e.getY();
+        
+        System.out.println(e.getClickCount() + " click(s)");
 
         for (int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
@@ -31,9 +33,5 @@ public class MouseInput extends MouseAdapter {
                 handler.addObject(new PlayerBullet(tempObject.getX() + 16, tempObject.getY() + 16, ID.PlayerBullet, handler, mx, my));
             }
         }
-    }
-
-    public void mouseReleased(MouseEvent e) {
-
     }
 }
