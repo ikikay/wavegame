@@ -18,7 +18,7 @@ public class EnemyBossBullet extends GameObject{
     private Handler handler;
     Random r = new Random();
     
-    public EnemyBossBullet(int x, int y, ID id, Handler handler){
+    public EnemyBossBullet(float x, float y, ID id, Handler handler){
         super(x, y, id);
         this.handler = handler;
         
@@ -27,7 +27,7 @@ public class EnemyBossBullet extends GameObject{
     }
     
     public Rectangle getBounds(){
-        return new Rectangle(x, y, 16, 16);
+        return new Rectangle((int)x, (int)y, 16, 16);
     }
     
     public void tick(){
@@ -42,6 +42,6 @@ public class EnemyBossBullet extends GameObject{
     
     public void render (Graphics g){
         g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(x, y, 16, 16);
+        g.fillRect((int)x, (int)y, 16, 16);
     }
 }

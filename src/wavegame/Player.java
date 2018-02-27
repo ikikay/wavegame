@@ -19,7 +19,7 @@ public class Player extends GameObject {
     Random r = new Random();
     Handler handler;
 
-    public Player(int x, int y, ID id, Handler handler) {
+    public Player(float x, float y, ID id, Handler handler) {
         super(x, y, id);
         this.handler = handler;
     }
@@ -60,11 +60,11 @@ public class Player extends GameObject {
 
     public void render(Graphics g) {
         g.setColor(Color.white);
-        g.fillRect(x, y, 32, 32);
+        g.fillRect((int)x, (int)y, 32, 32);
     }
 
     public Rectangle getBounds() {
-        return new Rectangle(x, y, 32, 32);
+        return new Rectangle((int)x, (int)y, 32, 32);
     }
 
     public void collision() {

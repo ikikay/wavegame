@@ -18,7 +18,7 @@ public class SmartEnemy extends GameObject {
     private Handler handler;
     private GameObject player;
 
-    public SmartEnemy(int x, int y, ID id, Handler handler) {
+    public SmartEnemy(float x, float y, ID id, Handler handler) {
         super(x, y, id);
         this.handler = handler;
 
@@ -26,6 +26,9 @@ public class SmartEnemy extends GameObject {
             if (handler.object.get(i).getId() == ID.Player) {
                 player = handler.object.get(i);
             }
+        }
+        if (player.getId() != ID.Player) {
+            System.out.println("ERREUR PLAYER");
         }
     }
 
@@ -35,19 +38,26 @@ public class SmartEnemy extends GameObject {
         float diffX = x - player.getX() - 16;
         float diffY = y - player.getY() - 16;
         float distance = (float) Math.sqrt((x - player.getX()) * (x - player.getX()) + (y - player.getY()) * (y - player.getY()));
-        velX = (int) ((-1 / distance) * diffX);
-        velY = (int) ((-1 / distance) * diffY);
+        velX = ((-1 / distance) * diffX);
+        velY = ((-1 / distance) * diffY);
+
+        if (y <= 0 || y >= WaveGame.HEIGHT - 32) {
+            velY *= -1;
+        }
+        if (x <= 0 || x >= WaveGame.WIDTH - 16) {
+            velX *= -1;
+        }
 
         //handler.addObject(new Trail(x, y, ID.Trail, Color.ORANGE, 16, 16, 0.02f, handler));
     }
 
     public void render(Graphics g) {
         g.setColor(Color.YELLOW);
-        g.fillRect(x, y, 16, 16);
+        g.fillRect((int)x, (int)y, 16, 16);
     }
 
     public Rectangle getBounds() {
-        return new Rectangle(x, y, 16, 16);
+        return new Rectangle((int)x, (int)y, 16, 16);
     }
 
 }

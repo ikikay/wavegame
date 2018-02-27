@@ -25,7 +25,7 @@ public class WaveGame extends Canvas implements Runnable {
     private Random r;
     private HUD hud;
     private Spawn spawner;
-    
+
     private final double UPDATE_CAP = 1.0 / 60.0;
 
     public WaveGame() {
@@ -35,16 +35,17 @@ public class WaveGame extends Canvas implements Runnable {
         new Window(WIDTH, HEIGHT, "Wave Game", this);
         hud = new HUD();
         spawner = new Spawn(handler, hud);
-
+        handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
+        
         r = new Random();
 
-        for (int i = 0; i < 5; i++) {
-        handler.addObject(new BasicEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.BasicEnemy, handler));
+        for (int i = 0; i < 1; i++) {
+            handler.addObject(new BasicEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.BasicEnemy, handler));
         }
         
-        handler.addObject(new EnemyBoss(WIDTH / 2 - 64, -60, ID.EnemyBoss, handler));
+        //handler.addObject(new EnemyBoss(WIDTH / 2 - 64, -60, ID.EnemyBoss, handler));
+        handler.addObject(new SmartEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.SmartEnemy, handler));
 
-        handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
     }
 
     public synchronized void start() {
@@ -67,59 +68,59 @@ public class WaveGame extends Canvas implements Runnable {
      */
     public void run() {
         this.requestFocus();
-        
+
         // Majoolwip
         running = true;
         System.out.println("");
-        
+
         boolean render = false;
         double firstTime = 0;
         double lastTime = System.nanoTime() / 1000000000.0;
         double passedTime = 0;
         double unprocessedTime = 0;
-        
+
         double frameTime = 0;
         int frames = 0;
         int fps = 0;
-        
-        while(running){
+
+        while (running) {
             render = false;
-            
+
             firstTime = System.nanoTime() / 1000000000.0;
             passedTime = firstTime - lastTime;
             lastTime = firstTime;
-            
+
             unprocessedTime += passedTime;
             frameTime += passedTime;
-            
-            while (unprocessedTime >= UPDATE_CAP){
+
+            while (unprocessedTime >= UPDATE_CAP) {
                 unprocessedTime -= UPDATE_CAP;
                 render = true;
-                
-                if(frameTime >= 1.0){
+
+                if (frameTime >= 1.0) {
                     frameTime = 0;
                     fps = frames;
                     frames = 0;
-                    
+
                     System.out.println("FPS: " + fps);
                 }
             }
-            
-            if(render){
-                frames ++;
+
+            if (render) {
+                frames++;
                 tick();
                 render();
             } else {
                 try {
                     Thread.sleep(1);
-                }catch(InterruptedException e){
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }
-        
+
         stop();
-        
+
 //        // Code Julian
 //        long lastTime = System.nanoTime();
 //        double amountOfTicks = 60.0;
@@ -179,7 +180,7 @@ public class WaveGame extends Canvas implements Runnable {
         new WaveGame();
     }
 
-    public static int clamp(int position, int min, int max) {
+    public static float clamp(float position, float min, float max) {
         if (position >= max) {
             return position = max;
         } else if (position <= min) {
