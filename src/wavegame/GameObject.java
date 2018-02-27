@@ -94,7 +94,7 @@ public abstract class GameObject {
         for (int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
 
-            if (getId() != tempObject.getId()) {
+            if (hashCode()!= tempObject.hashCode()) {
                 if (getId() == ID.Player || getId() == ID.PlayerBullet) {
                     if (getBounds().intersects(tempObject.getBounds())) {
                         life = life - tempObject.getDammage();

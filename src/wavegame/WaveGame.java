@@ -26,6 +26,7 @@ public class WaveGame extends Canvas implements Runnable {
     private Random r;
     private HUD hud;
     private Spawn spawner;
+    private Wall screenPlay;
 
     private final double UPDATE_CAP = 1.0 / 60.0;
 
@@ -36,6 +37,7 @@ public class WaveGame extends Canvas implements Runnable {
 
         new Window(WIDTH, HEIGHT, "Wave Game", this);
         hud = new HUD();
+        screenPlay = new Wall(0, 0, ID.Wall, handler);
         spawner = new Spawn(handler, hud);
         handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
         
@@ -171,6 +173,7 @@ public class WaveGame extends Canvas implements Runnable {
         g.fillRect(0, 0, WIDTH, HEIGHT);
         handler.render(g);
         hud.render(g);
+        screenPlay.render(g);
         g.dispose();
         bs.show();
     }
