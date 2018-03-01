@@ -15,8 +15,13 @@ import java.awt.Rectangle;
  */
 public class Wall extends GameObject {
 
-    public Wall(float x, float y, ID id, Handler handler) {
+    private int wallHeight;
+    private int wallWidth;
+    
+    public Wall(float x, float y, ID id, Handler handler, int wallWidth, int wallHeight) {
         super(x, y, id, handler);
+        this.wallHeight = wallHeight;        
+        this.wallWidth = wallWidth;
     }
 
     public void tick() {
@@ -24,12 +29,12 @@ public class Wall extends GameObject {
     }
 
     public void render(Graphics g) {
-        g.setColor(Color.WHITE);
-        g.fillRect(5, 5, WaveGame.WIDTH - 15, WaveGame.HEIGHT - 39) ;
+        g.setColor(Color.RED);
+        g.fillRect((int) x, (int) y, wallWidth, wallHeight) ;
     }
 
     public Rectangle getBounds() {
-        return new Rectangle((int) x, (int) y, WaveGame.HEIGHT - 15, WaveGame.WIDTH -39);
+        return new Rectangle((int) x, (int) y, wallWidth, wallHeight);
     }
 
 }

@@ -26,7 +26,7 @@ public class WaveGame extends Canvas implements Runnable {
     private Random r;
     private HUD hud;
     private Spawn spawner;
-    private Wall screenPlay;
+    //private Wall screenPlay;
 
     private final double UPDATE_CAP = 1.0 / 60.0;
 
@@ -35,21 +35,24 @@ public class WaveGame extends Canvas implements Runnable {
         this.addKeyListener(new KeyInput(handler));
         this.addMouseListener(new MouseInput(handler));
 
-        new Window(WIDTH, HEIGHT, "Wave Game", this);
+        new Window(WIDTH + 6, HEIGHT + 29, "Wave Game", this);
+        handler.addObject(new Wall(0, 0, ID.Wall, handler, WIDTH, 8)); //Mur du Haut
+        handler.addObject(new Wall(0, 0, ID.Wall, handler, 8, HEIGHT)); //Mur de Gauche
+        handler.addObject(new Wall(WIDTH - 8, 0, ID.Wall, handler, 8, HEIGHT)); // Mur de Droite
+        handler.addObject(new Wall(0, HEIGHT - 8, ID.Wall, handler, WIDTH, 8)); //Mur du Bas
         hud = new HUD();
-        screenPlay = new Wall(5, 5, ID.Wall, handler);
-        spawner = new Spawn(handler, hud);
-        handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
         
+        spawner = new Spawn(handler, hud);
+        handler.addObject(new Player(WIDTH - 32, HEIGHT - 32, ID.Player, handler));
+
         r = new Random();
 
         for (int i = 0; i < 15; i++) {
             handler.addObject(new BasicEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.BasicEnemy, handler));
         }
-        
+
         //handler.addObject(new EnemyBoss(WIDTH / 2 - 64, -60, ID.EnemyBoss, handler));
         //handler.addObject(new SmartEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.SmartEnemy, handler));
-
     }
 
     public synchronized void start() {
@@ -173,7 +176,7 @@ public class WaveGame extends Canvas implements Runnable {
         g.fillRect(0, 0, WIDTH, HEIGHT);
         handler.render(g);
         hud.render(g);
-        screenPlay.render(g);
+        //screenPlay.render(g);
         g.dispose();
         bs.show();
     }

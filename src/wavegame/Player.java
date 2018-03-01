@@ -52,9 +52,6 @@ public class Player extends GameObject {
             velX = 0;
         }
 
-        x = WaveGame.clamp(x, 0, WaveGame.WIDTH - 37);
-        y = WaveGame.clamp(y, 0, WaveGame.HEIGHT - 60);
-
         collision();
     }
 

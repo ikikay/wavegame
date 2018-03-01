@@ -31,13 +31,6 @@ public class BasicEnemy extends GameObject {
         x += velX;
         y += velY;
 
-        if (y <= 0 || y >= WaveGame.HEIGHT - 47) {
-            velY *= -1;
-        }
-        if (x <= 0 || x >= WaveGame.WIDTH - 16) {
-            velX *= -1;
-        }
-
         //handler.addObject(new Trail(x, y, ID.Trail, Color.pink, 16, 16, 0.02f, handler));
         super.collision();
         if (life <= 0){
