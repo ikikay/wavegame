@@ -7,6 +7,8 @@ package wavegame;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
+import static wavegame.WaveGame.HEIGHT;
+import static wavegame.WaveGame.WIDTH;
 
 /**
  *
@@ -44,15 +46,19 @@ public class Handler {
     }
 
     public void clearEnemys() {
-        for (int i = 0; i < object.size(); i++){
+        for (int i = 0; i < object.size(); i++) {
             GameObject tempObject = object.get(i);
-            if(tempObject.getType()== TYPE.Player || tempObject.getType() == TYPE.Wall){
+            if (tempObject.getType() == TYPE.Player || tempObject.getType() == TYPE.Wall) {
                 object.clear();
+                addObject(new Wall(0, 0, TYPE.Wall, this, WIDTH, 8)); //Mur du Haut
+                addObject(new Wall(0, 0, TYPE.Wall, this, 8, HEIGHT)); //Mur de Gauche
+                addObject(new Wall(WIDTH - 8, 0, TYPE.Wall, this, 8, HEIGHT)); // Mur de Droite
+                addObject(new Wall(0, HEIGHT - 8, TYPE.Wall, this, WIDTH, 8)); //Mur du Bas
                 addObject(new Player(WaveGame.WIDTH / 2 - 32, WaveGame.HEIGHT / 2 - 32, TYPE.Player, this));
             }
         }
     }
-    
+
     public boolean isUp() {
         return up;
     }

@@ -107,21 +107,35 @@ public abstract class GameObject {
                 if (getId() != tempObject.getId()) { //Si c'est pas le même objet
                     if (getType() == TYPE.Player) {
                         if ((tempObject.getType() == TYPE.Wall) && (getBounds().intersects(tempObject.getBounds()))) {
-                            System.out.println("Colision joueur/wall");
+                            System.out.println("Colision joueur/wall " + getBounds() + " " + tempObject.getBounds());
+                            //x= 600;
+
+                            if (velX > 0) {
+                                x -= 5;
+                            } else if (velY > 0) {
+                                y -= 5;
+                            }
+
+                            if (velX < 0) {
+                                x += 5;
+                            } else if (velY < 0) {
+                                y += 5;
+                            }
+                            velX = 0;
+                            velY = 0;
                         } else if (getBounds().intersects(tempObject.getBounds())) {
                             life = life - tempObject.getDammage();
                         }
 
                     } else if (getType() == TYPE.PlayerBullet) {
-                        if (getBounds().intersects(tempObject.getBounds())) {
-                            handler.object.remove(this);
+                        if ((tempObject.getType() != TYPE.Player) && (getBounds().intersects(tempObject.getBounds()))) {
+                            life = life - tempObject.getDammage();
+                            tempObject.setLife(tempObject.getLife() - getDammage());
                         }
                     } else {
-                        if ((tempObject.getType() == TYPE.Player || tempObject.getType() == TYPE.PlayerBullet) && (getBounds().intersects(tempObject.getBounds()))) {
-                            life = life - tempObject.getDammage();
-                        } else if (getBounds().intersects(tempObject.getBounds())) {
-                            velX *= -1;
-                            velY *= -1;
+                        if (getBounds().intersects(tempObject.getBounds())) {
+                            velX *= -1.0f;
+                            velY *= -1.0f;
                         }
                     }
                 }

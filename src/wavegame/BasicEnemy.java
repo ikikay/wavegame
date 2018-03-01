@@ -19,7 +19,7 @@ public class BasicEnemy extends GameObject {
     public BasicEnemy(float x, float y, TYPE type, Handler handler) {
         super(x, y, type, handler);
         this.life = 100;
-        this.dammage = this.life;
+        this.dammage = 100;
 
         Random r = new Random();
 

@@ -39,10 +39,6 @@ public class PlayerBullet extends GameObject {
             }
         }
 
-        if (y <= 0 || y >= WaveGame.HEIGHT - 47 || x <= 0 || x >= WaveGame.WIDTH - 16) {
-            handler.removeObject(this);
-        }
-
         super.collision();
         if (life <= 0) {
             handler.removeObject(this);

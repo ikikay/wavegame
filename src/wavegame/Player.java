@@ -25,6 +25,9 @@ public class Player extends GameObject {
     }
 
     public void tick() {
+
+        super.collision();
+
         x += velX;
         y += velY;
 
@@ -52,7 +55,6 @@ public class Player extends GameObject {
             velX = 0;
         }
 
-        super.collision();
     }
 
     public void render(Graphics g) {
