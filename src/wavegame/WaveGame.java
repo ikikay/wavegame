@@ -37,7 +37,7 @@ public class WaveGame extends Canvas implements Runnable {
 
         new Window(WIDTH, HEIGHT, "Wave Game", this);
         hud = new HUD();
-        screenPlay = new Wall(0, 0, ID.Wall, handler);
+        screenPlay = new Wall(5, 5, ID.Wall, handler);
         spawner = new Spawn(handler, hud);
         handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
         

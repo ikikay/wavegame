@@ -29,7 +29,7 @@ public class Wall extends GameObject {
     }
 
     public Rectangle getBounds() {
-        return new Rectangle((int) x, (int) y, WaveGame.HEIGHT, WaveGame.WIDTH);
+        return new Rectangle((int) x, (int) y, WaveGame.HEIGHT - 15, WaveGame.WIDTH -39);
     }
 
 }
