@@ -54,7 +54,7 @@ public class Player extends GameObject {
         } else if (!handler.isLeft()) {
             velX = 0;
         }
-
+        
     }
 
     public void render(Graphics g) {

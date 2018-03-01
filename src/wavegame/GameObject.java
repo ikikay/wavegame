@@ -106,24 +106,20 @@ public abstract class GameObject {
             if (getType() != TYPE.Wall) { //Pas de collision pour les murs, ce sont les objets qui peuvent avoir une collision avec le murs
                 if (getId() != tempObject.getId()) { //Si c'est pas le même objet
                     if (getType() == TYPE.Player) {
-                        if ((tempObject.getType() == TYPE.Wall) && (getBounds().intersects(tempObject.getBounds()))) {
-                            System.out.println("Colision joueur/wall " + getBounds() + " " + tempObject.getBounds());
-                            //x= 600;
-
-                            if (velX > 0) {
-                                x -= 5;
-                            } else if (velY > 0) {
-                                y -= 5;
-                            }
-
-                            if (velX < 0) {
-                                x += 5;
-                            } else if (velY < 0) {
-                                y += 5;
-                            }
-                            velX = 0;
-                            velY = 0;
-                        } else if (getBounds().intersects(tempObject.getBounds())) {
+                        if (x < 8) {
+                            x = 8;
+                        } else if (x + 32 > WaveGame.WIDTH - 8) {
+                            System.out.println("Colision x !");
+                            x = WaveGame.WIDTH - 8 - 32;
+                        }
+                        if (y < 8) {
+                            y = 8;
+                        } else if (y + 32 > WaveGame.HEIGHT - 8) {
+                            System.out.println("Colision y !");
+                            y = WaveGame.HEIGHT - 8 - 32;
+                        }
+                        
+                        if (getBounds().intersects(tempObject.getBounds())) {
                             life = life - tempObject.getDammage();
                         }
 
