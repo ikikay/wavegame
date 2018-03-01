@@ -26,7 +26,7 @@ public class KeyInput extends KeyAdapter {
 
         for (int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
-            if (tempObject.getId() == ID.Player) {
+            if (tempObject.getType()== TYPE.Player) {
                 if ((key == KeyEvent.VK_UP) || (key == KeyEvent.VK_Z)) {
                     handler.setUp(true);
                 }
@@ -49,7 +49,7 @@ public class KeyInput extends KeyAdapter {
 
         for (int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
-            if (tempObject.getId() == ID.Player) {
+            if (tempObject.getType()== TYPE.Player) {
                 if ((key == KeyEvent.VK_UP) || (key == KeyEvent.VK_Z)) {
                     handler.setUp(false);
                 }

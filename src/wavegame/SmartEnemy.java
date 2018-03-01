@@ -17,17 +17,17 @@ public class SmartEnemy extends GameObject {
 
     private GameObject player;
 
-    public SmartEnemy(float x, float y, ID id, Handler handler) {
-        super(x, y, id, handler);
+    public SmartEnemy(float x, float y, TYPE type, Handler handler) {
+        super(x, y, type, handler);
         this.life = 200;
         this.dammage = this.life;
 
         for (int i = 0; i < handler.object.size(); i++) {
-            if (handler.object.get(i).getId() == ID.Player) {
+            if (handler.object.get(i).getType()== TYPE.Player) {
                 player = handler.object.get(i);
             }
         }
-        if (player.getId() != ID.Player) {
+        if (player.getType()!= TYPE.Player) {
             System.out.println("ERREUR PLAYER");
         }
     }

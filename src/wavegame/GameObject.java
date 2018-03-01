@@ -14,17 +14,19 @@ import java.awt.Rectangle;
  */
 public abstract class GameObject {
 
+    protected double id;
     protected float x, y;
-    protected ID id;
+    protected TYPE type;
     protected Handler handler;
     protected float velX, velY;
     protected int life;
     protected int dammage;
 
-    public GameObject(float x, float y, ID id, Handler handler) {
+    public GameObject(float x, float y, TYPE type, Handler handler) {
+        this.id = System.nanoTime();
         this.x = x;
         this.y = y;
-        this.id = id;
+        this.type = type;
         this.handler = handler;
     }
 
@@ -33,6 +35,14 @@ public abstract class GameObject {
     public abstract void render(Graphics g);
 
     public abstract Rectangle getBounds();
+
+    public double getId() {
+        return id;
+    }
+
+    public void setId(double id) {
+        this.id = id;
+    }
 
     public float getX() {
         return x;
@@ -50,12 +60,12 @@ public abstract class GameObject {
         this.y = y;
     }
 
-    public ID getId() {
-        return id;
+    public TYPE getType() {
+        return type;
     }
 
-    public void setId(ID id) {
-        this.id = id;
+    public void setType(TYPE type) {
+        this.type = type;
     }
 
     public float getVelX() {
@@ -93,18 +103,26 @@ public abstract class GameObject {
     public void collision() {
         for (int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
+            if (getType() != TYPE.Wall) { //Pas de collision pour les murs, ce sont les objets qui peuvent avoir une collision avec le murs
+                if (getId() != tempObject.getId()) { //Si c'est pas le même objet
+                    if (getType() == TYPE.Player) {
+                        if ((tempObject.getType() == TYPE.Wall) && (getBounds().intersects(tempObject.getBounds()))) {
+                            System.out.println("Colision joueur/wall");
+                        } else if (getBounds().intersects(tempObject.getBounds())) {
+                            life = life - tempObject.getDammage();
+                        }
 
-            if (hashCode()!= tempObject.hashCode()) {
-                if (getId() == ID.Player || getId() == ID.PlayerBullet) {
-                    if (getBounds().intersects(tempObject.getBounds())) {
-                        life = life - tempObject.getDammage();
-                    }
-                } else {
-                    if (tempObject.getId() == ID.Player || tempObject.getId() == ID.PlayerBullet) {
-                        life = life - tempObject.getDammage();
-                    } else if (getBounds().intersects(tempObject.getBounds())) {
-                        velX *= -1;
-                        velY *= -1;
+                    } else if (getType() == TYPE.PlayerBullet) {
+                        if (getBounds().intersects(tempObject.getBounds())) {
+                            handler.object.remove(this);
+                        }
+                    } else {
+                        if ((tempObject.getType() == TYPE.Player || tempObject.getType() == TYPE.PlayerBullet) && (getBounds().intersects(tempObject.getBounds()))) {
+                            life = life - tempObject.getDammage();
+                        } else if (getBounds().intersects(tempObject.getBounds())) {
+                            velX *= -1;
+                            velY *= -1;
+                        }
                     }
                 }
             }

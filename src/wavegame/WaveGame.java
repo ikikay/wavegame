@@ -36,19 +36,19 @@ public class WaveGame extends Canvas implements Runnable {
         this.addMouseListener(new MouseInput(handler));
 
         new Window(WIDTH + 6, HEIGHT + 29, "Wave Game", this);
-        handler.addObject(new Wall(0, 0, ID.Wall, handler, WIDTH, 8)); //Mur du Haut
-        handler.addObject(new Wall(0, 0, ID.Wall, handler, 8, HEIGHT)); //Mur de Gauche
-        handler.addObject(new Wall(WIDTH - 8, 0, ID.Wall, handler, 8, HEIGHT)); // Mur de Droite
-        handler.addObject(new Wall(0, HEIGHT - 8, ID.Wall, handler, WIDTH, 8)); //Mur du Bas
+        handler.addObject(new Wall(0, 0, TYPE.Wall, handler, WIDTH, 8)); //Mur du Haut
+        handler.addObject(new Wall(0, 0, TYPE.Wall, handler, 8, HEIGHT)); //Mur de Gauche
+        handler.addObject(new Wall(WIDTH - 8, 0, TYPE.Wall, handler, 8, HEIGHT)); // Mur de Droite
+        handler.addObject(new Wall(0, HEIGHT - 8, TYPE.Wall, handler, WIDTH, 8)); //Mur du Bas
         hud = new HUD();
         
         spawner = new Spawn(handler, hud);
-        handler.addObject(new Player(WIDTH - 32, HEIGHT - 32, ID.Player, handler));
+        handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, TYPE.Player, handler));
 
         r = new Random();
 
         for (int i = 0; i < 15; i++) {
-            handler.addObject(new BasicEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.BasicEnemy, handler));
+            handler.addObject(new BasicEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), TYPE.BasicEnemy, handler));
         }
 
         //handler.addObject(new EnemyBoss(WIDTH / 2 - 64, -60, ID.EnemyBoss, handler));

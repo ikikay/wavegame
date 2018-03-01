@@ -16,8 +16,8 @@ import java.util.Random;
  */
 public class FastEnemy extends GameObject {
 
-    public FastEnemy(float x, float y, ID id, Handler handler) {
-        super(x, y, id, handler);
+    public FastEnemy(float x, float y, TYPE type, Handler handler) {
+        super(x, y, type, handler);
         this.life = 150;
         this.dammage = this.life;
 
@@ -42,7 +42,7 @@ public class FastEnemy extends GameObject {
             velX *= -1;
         }
 
-        //handler.addObject(new Trail(x, y, ID.Trail, Color.red, 16, 16, 0.02f, handler));
+        //handler.addObject(new Trail(x, y, TYPE.Trail, Color.red, 16, 16, 0.02f, handler));
         super.collision();
         if (life <= 0) {
             handler.removeObject(this);

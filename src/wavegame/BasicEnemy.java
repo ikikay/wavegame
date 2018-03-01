@@ -16,8 +16,8 @@ import java.util.Random;
  */
 public class BasicEnemy extends GameObject {
 
-    public BasicEnemy(float x, float y, ID id, Handler handler) {
-        super(x, y, id, handler);
+    public BasicEnemy(float x, float y, TYPE type, Handler handler) {
+        super(x, y, type, handler);
         this.life = 100;
         this.dammage = this.life;
 
@@ -31,7 +31,7 @@ public class BasicEnemy extends GameObject {
         x += velX;
         y += velY;
 
-        //handler.addObject(new Trail(x, y, ID.Trail, Color.pink, 16, 16, 0.02f, handler));
+        //handler.addObject(new Trail(x, y, TYPE.Trail, Color.pink, 16, 16, 0.02f, handler));
         super.collision();
         if (life <= 0){
             handler.removeObject(this);

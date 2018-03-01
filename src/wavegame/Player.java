@@ -18,8 +18,8 @@ public class Player extends GameObject {
 
     Random r = new Random();
 
-    public Player(float x, float y, ID id, Handler handler) {
-        super(x, y, id, handler);
+    public Player(float x, float y, TYPE type, Handler handler) {
+        super(x, y, type, handler);
         this.life = 100;
         this.dammage = 0;
     }
@@ -52,7 +52,7 @@ public class Player extends GameObject {
             velX = 0;
         }
 
-        collision();
+        super.collision();
     }
 
     public void render(Graphics g) {
@@ -64,18 +64,18 @@ public class Player extends GameObject {
         return new Rectangle((int) x, (int) y, 32, 32);
     }
 
-    public void collision() {
-        for (int i = 0; i < handler.object.size(); i++) {
-            GameObject tempObject = handler.object.get(i);
-            if ((tempObject.getId() == ID.BasicEnemy) || (tempObject.getId() == ID.FastEnemy) || (tempObject.getId() == ID.SmartEnemy)) {
-                if (getBounds().intersects(tempObject.getBounds())) {
-                    HUD.HEALTH -= 2;
-                }
-            } else if (tempObject.getId() == ID.EnemyBoss) {
-                if (getBounds().intersects(tempObject.getBounds())) {
-                    HUD.HEALTH = 0;
-                }
-            }
-        }
-    }
+//    public void collision() {
+//        for (int i = 0; i < handler.object.size(); i++) {
+//            GameObject tempObject = handler.object.get(i);
+//            if ((tempObject.getType() == TYPE.BasicEnemy) || (tempObject.getType() == TYPE.FastEnemy) || (tempObject.getId() == TYPE.SmartEnemy)) {
+//                if (getBounds().intersects(tempObject.getBounds())) {
+//                    HUD.HEALTH -= 2;
+//                }
+//            } else if (tempObject.getType() == TYPE.EnemyBoss) {
+//                if (getBounds().intersects(tempObject.getBounds())) {
+//                    HUD.HEALTH = 0;
+//                }
+//            }
+//        }
+//    }
 }

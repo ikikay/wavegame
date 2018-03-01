@@ -20,8 +20,8 @@ public class EnemyBoss extends GameObject {
     private int timer = 80;
     private int timer2 = 50;
 
-    public EnemyBoss(float x, float y, ID id, Handler handler) {
-        super(x, y, id, handler);
+    public EnemyBoss(float x, float y, TYPE type, Handler handler) {
+        super(x, y, type, handler);
         this.life = 1000;
         this.dammage = this.life;
 
@@ -56,7 +56,7 @@ public class EnemyBoss extends GameObject {
             velX = WaveGame.clamp(velX, -10, 10);
             int spawn = r.nextInt(10);
             if (spawn == 0) {
-                handler.addObject(new EnemyBossBullet(x, y, ID.BasicEnemy, handler));
+                handler.addObject(new EnemyBossBullet(x, y, TYPE.BasicEnemy, handler));
             }
         }
         if (x <= 0 || x >= WaveGame.WIDTH - 96) {

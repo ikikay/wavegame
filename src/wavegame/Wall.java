@@ -18,8 +18,8 @@ public class Wall extends GameObject {
     private int wallHeight;
     private int wallWidth;
     
-    public Wall(float x, float y, ID id, Handler handler, int wallWidth, int wallHeight) {
-        super(x, y, id, handler);
+    public Wall(float x, float y, TYPE type, Handler handler, int wallWidth, int wallHeight) {
+        super(x, y, type, handler);
         this.wallHeight = wallHeight;        
         this.wallWidth = wallWidth;
     }

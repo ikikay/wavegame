@@ -9,7 +9,7 @@ package wavegame;
  *
  * @author Ikikay
  */
-public enum ID {
+public enum TYPE {
     Player(),
     PlayerBullet,
     BasicEnemy(),

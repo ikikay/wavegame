@@ -15,8 +15,8 @@ import java.awt.Rectangle;
  */
 public class PlayerBullet extends GameObject {
 
-    public PlayerBullet(float x, float y, ID id, Handler handler, float mx, float my) {
-        super(x, y, id, handler);
+    public PlayerBullet(float x, float y, TYPE type, Handler handler, float mx, float my) {
+        super(x, y, type, handler);
         this.life = 50;
         this.dammage = 100;
 
@@ -32,7 +32,7 @@ public class PlayerBullet extends GameObject {
 
         for (int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
-            if ((tempObject.getId() != ID.Player) || (tempObject.getId() != ID.PlayerBullet)) {
+            if ((tempObject.getType()!= TYPE.Player) || (tempObject.getType()!= TYPE.PlayerBullet)) {
                 if (getBounds().intersects(tempObject.getBounds())) {
                     //handler.removeObject(this);
                 }
