@@ -54,12 +54,12 @@ public class Player extends GameObject {
         }
 
         x = WaveGame.clamp(x, 0, WaveGame.WIDTH - 31);
-        
+
         for (int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
-            if(tempObject.getType() == TYPE.BossEnemy){
+            if (tempObject.getType() == TYPE.BossEnemy) {
                 y = WaveGame.clamp(y, 124, WaveGame.HEIGHT - 31);
-            }else{
+            } else {
                 y = WaveGame.clamp(y, 0, WaveGame.HEIGHT - 31);
             }
 
@@ -71,6 +71,23 @@ public class Player extends GameObject {
     public void render(Graphics g) {
         g.setColor(Color.white);
         g.fillRect((int) x, (int) y, 32, 32);
+
+//        g.setColor(Color.red);
+//        g.fillRect((int) x, (int) y, 50, 50);
+//        g.fillRect((int) x + 50, (int) y + 50, 50, 50);
+//        g.setColor(Color.white);
+//        g.fillRect((int) x, (int) y + 50, 50, 50);
+//
+//        g.drawRect((int) x, (int) y, 50, 50);
+//        g.drawRect((int) x, (int) y + 50, 50, 50);
+//        g.drawRect((int) x, (int) y + 100, 50, 50);
+//        g.drawRect((int) x + 50, (int) y, 50, 50);
+//        g.drawRect((int) x + 50, (int) y + 50, 50, 50);
+//        g.drawRect((int) x + 50, (int) y + 100, 50, 50);
+//        g.drawRect((int) x + 100, (int) y, 50, 50);
+//        g.drawRect((int) x + 100, (int) y + 50, 50, 50);
+//        g.drawRect((int) x + 100, (int) y + 100, 50, 50);
+
     }
 
     public Rectangle getBounds() {

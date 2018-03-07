@@ -8,7 +8,6 @@ package wavegame;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
@@ -23,32 +22,40 @@ public class WaveGame extends Canvas implements Runnable {
     private Thread thread;
     private boolean running = false;
     private Handler handler;
-    private Random r;
+    private Random r = new Random();
     private HUD hud;
     private Spawner spawner;
-   
+    private Menu menu;
+
+    public enum STATE {
+        Menu,
+        Aide,
+        Jeu,
+        Pause,
+        Fin;
+    }
+    public STATE gameState = STATE.Menu;
 
     private final double UPDATE_CAP = 1.0 / 60.0;
 
     public WaveGame() {
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
-        this.addMouseListener(new MouseInput(handler));
+        this.addMouseListener(new MouseInput(this, handler));
 
         new Window(WIDTH + 6, HEIGHT + 29, "Wave Game", this);
+        menu = new Menu(this, handler);
+        this.addMouseListener(menu);
         hud = new HUD();
-
         spawner = new Spawner(handler, hud);
-        handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, TYPE.Player, handler));
 
-        r = new Random();
-
-        for (int i = 0; i < 15; i++) {
-            handler.addObject(new BasicEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), TYPE.BasicEnemy, handler));
+        System.out.println(gameState);
+        if (gameState == STATE.Menu) {
+            //Décoration
+            for (int i = 0; i < 10; i++) {
+                handler.addObject(new MenuParticules(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), TYPE.MenuParticules, handler));
+            }
         }
-
-        //handler.addObject(new EnemyBoss(WIDTH / 2 - 64, -60, TYPE.EnemyBoss, handler));
-        //handler.addObject(new SmartEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), TYPE.SmartEnemy, handler));
     }
 
     public synchronized void start() {
@@ -169,8 +176,17 @@ public class WaveGame extends Canvas implements Runnable {
 
     private void tick() {
         handler.tick();
-        hud.tick();
-        spawner.tick();
+        if (gameState == STATE.Menu) {
+            menu.tick();
+        } else if (gameState == STATE.Jeu) {
+            hud.tick();
+            spawner.tick();
+            if(HUD.HEALTH <= 0){
+                HUD.HEALTH = 100;
+                gameState = STATE.Fin;
+                handler.object.clear();
+            }
+        }
     }
 
     private void render() {
@@ -183,8 +199,15 @@ public class WaveGame extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
         g.fillRect(0, 0, WIDTH, HEIGHT);
-        handler.render(g);
-        hud.render(g);
+        try {
+            handler.render(g);
+        } catch (Exception e) {
+        }
+        if ((gameState == STATE.Menu) || (gameState == STATE.Aide) || (gameState == STATE.Fin)) {
+            menu.render(g);
+        } else if (gameState == STATE.Jeu) {
+            hud.render(g);
+        }
         g.dispose();
         bs.show();
     }

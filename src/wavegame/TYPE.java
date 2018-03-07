@@ -17,5 +17,6 @@ public enum TYPE {
     SmartEnemy(),
     BossEnemy(),
     Wall(),
-    Trail();
+    Trail(),
+    MenuParticules
 }
