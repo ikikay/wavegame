@@ -16,17 +16,15 @@ import java.util.Random;
  */
 public class Player extends GameObject {
 
+    private Handler handler;
     Random r = new Random();
 
     public Player(float x, float y, TYPE type, Handler handler) {
-        super(x, y, type, handler);
-        this.life = 100;
-        this.dammage = 0;
+        super(x, y, type);
+        this.handler = handler;
     }
 
     public void tick() {
-
-        super.collision();
 
         x += velX;
         y += velY;
@@ -55,6 +53,19 @@ public class Player extends GameObject {
             velX = 0;
         }
 
+        x = WaveGame.clamp(x, 0, WaveGame.WIDTH - 31);
+        
+        for (int i = 0; i < handler.object.size(); i++) {
+            GameObject tempObject = handler.object.get(i);
+            if(tempObject.getType() == TYPE.BossEnemy){
+                y = WaveGame.clamp(y, 124, WaveGame.HEIGHT - 31);
+            }else{
+                y = WaveGame.clamp(y, 0, WaveGame.HEIGHT - 31);
+            }
+
+        }
+        //handler.addObject(new Trail(x, y, TYPE.Trail, Color.white, 32, 32, 0.05f, handler));
+        collision();
     }
 
     public void render(Graphics g) {
@@ -66,18 +77,34 @@ public class Player extends GameObject {
         return new Rectangle((int) x, (int) y, 32, 32);
     }
 
-//    public void collision() {
-//        for (int i = 0; i < handler.object.size(); i++) {
-//            GameObject tempObject = handler.object.get(i);
-//            if ((tempObject.getType() == TYPE.BasicEnemy) || (tempObject.getType() == TYPE.FastEnemy) || (tempObject.getId() == TYPE.SmartEnemy)) {
-//                if (getBounds().intersects(tempObject.getBounds())) {
-//                    HUD.HEALTH -= 2;
-//                }
-//            } else if (tempObject.getType() == TYPE.EnemyBoss) {
-//                if (getBounds().intersects(tempObject.getBounds())) {
-//                    HUD.HEALTH = 0;
-//                }
-//            }
-//        }
-//    }
+    private void collision() {
+        for (int i = 0; i < handler.object.size(); i++) {
+            GameObject tempObject = handler.object.get(i);
+
+            switch (tempObject.getType()) {
+                case BasicEnemy:
+                    if (getBounds().intersects(tempObject.getBounds())) {
+                        HUD.HEALTH -= 2;
+                    }
+                    break;
+                case FastEnemy:
+                    if (getBounds().intersects(tempObject.getBounds())) {
+                        HUD.HEALTH -= 2;
+                    }
+                    break;
+                case SmartEnemy:
+                    if (getBounds().intersects(tempObject.getBounds())) {
+                        HUD.HEALTH -= 2;
+                    }
+                    break;
+                case BossEnemy:
+                    if (getBounds().intersects(tempObject.getBounds())) {
+                        HUD.HEALTH -= 200;
+                    }
+                    break;
+
+            }
+        }
+
+    }
 }

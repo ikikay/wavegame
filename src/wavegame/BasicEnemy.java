@@ -16,10 +16,11 @@ import java.util.Random;
  */
 public class BasicEnemy extends GameObject {
 
+    private Handler handler;
+
     public BasicEnemy(float x, float y, TYPE type, Handler handler) {
-        super(x, y, type, handler);
-        this.life = 100;
-        this.dammage = 100;
+        super(x, y, type);
+        this.handler = handler;
 
         Random r = new Random();
 
@@ -31,10 +32,11 @@ public class BasicEnemy extends GameObject {
         x += velX;
         y += velY;
 
-        //handler.addObject(new Trail(x, y, TYPE.Trail, Color.pink, 16, 16, 0.02f, handler));
-        super.collision();
-        if (life <= 0){
-            handler.removeObject(this);
+        if (y <= 0 || y >= WaveGame.HEIGHT - 16) {
+            velY *= -1;
+        }
+        if (x <= 0 || x >= WaveGame.WIDTH - 16) {
+            velX *= -1;
         }
     }
 

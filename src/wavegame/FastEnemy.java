@@ -15,11 +15,13 @@ import java.util.Random;
  * @author Ikikay
  */
 public class FastEnemy extends GameObject {
-
+    
+    private Handler handler;
+    
     public FastEnemy(float x, float y, TYPE type, Handler handler) {
-        super(x, y, type, handler);
-        this.life = 150;
-        this.dammage = this.life;
+        super(x, y, type);
+        this.handler = handler;
+
 
         Random r = new Random();
 
@@ -35,7 +37,7 @@ public class FastEnemy extends GameObject {
         x += velX;
         y += velY;
 
-        if (y <= 0 || y >= WaveGame.HEIGHT - 47) {
+        if (y <= 0 || y >= WaveGame.HEIGHT - 16) {
             velY *= -1;
         }
         if (x <= 0 || x >= WaveGame.WIDTH - 16) {
@@ -43,11 +45,6 @@ public class FastEnemy extends GameObject {
         }
 
         //handler.addObject(new Trail(x, y, TYPE.Trail, Color.red, 16, 16, 0.02f, handler));
-        super.collision();
-        if (life <= 0) {
-            handler.removeObject(this);
-        }
-
     }
 
     public void render(Graphics g) {

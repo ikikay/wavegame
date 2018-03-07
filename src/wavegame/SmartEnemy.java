@@ -14,13 +14,13 @@ import java.awt.Rectangle;
  * @author ikika
  */
 public class SmartEnemy extends GameObject {
-
+    
+    private Handler handler;
     private GameObject player;
 
     public SmartEnemy(float x, float y, TYPE type, Handler handler) {
-        super(x, y, type, handler);
-        this.life = 200;
-        this.dammage = this.life;
+        super(x, y, type);
+        this.handler = handler;
 
         for (int i = 0; i < handler.object.size(); i++) {
             if (handler.object.get(i).getType()== TYPE.Player) {
@@ -41,7 +41,7 @@ public class SmartEnemy extends GameObject {
         velX = ((-1 / distance) * diffX);
         velY = ((-1 / distance) * diffY);
 
-        if (y <= 0 || y >= WaveGame.HEIGHT - 32) {
+        if (y <= 0 || y >= WaveGame.HEIGHT - 16) {
             velY *= -1;
         }
         if (x <= 0 || x >= WaveGame.WIDTH - 16) {
@@ -49,10 +49,6 @@ public class SmartEnemy extends GameObject {
         }
 
         //handler.addObject(new Trail(x, y, ID.Trail, Color.ORANGE, 16, 16, 0.02f, handler));z
-        super.collision();
-        if (life <= 0) {
-            handler.removeObject(this);
-        }
     }
 
     public void render(Graphics g) {
@@ -63,5 +59,4 @@ public class SmartEnemy extends GameObject {
     public Rectangle getBounds() {
         return new Rectangle((int) x, (int) y, 16, 16);
     }
-
 }

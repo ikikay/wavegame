@@ -25,8 +25,8 @@ public class WaveGame extends Canvas implements Runnable {
     private Handler handler;
     private Random r;
     private HUD hud;
-    private Spawn spawner;
-    //private Wall screenPlay;
+    private Spawner spawner;
+   
 
     private final double UPDATE_CAP = 1.0 / 60.0;
 
@@ -36,13 +36,9 @@ public class WaveGame extends Canvas implements Runnable {
         this.addMouseListener(new MouseInput(handler));
 
         new Window(WIDTH + 6, HEIGHT + 29, "Wave Game", this);
-        handler.addObject(new Wall(0, 0, TYPE.Wall, handler, WIDTH, 8)); //Mur du Haut
-        handler.addObject(new Wall(0, 0, TYPE.Wall, handler, 8, HEIGHT)); //Mur de Gauche
-        handler.addObject(new Wall(WIDTH - 8, 0, TYPE.Wall, handler, 8, HEIGHT)); // Mur de Droite
-        handler.addObject(new Wall(0, HEIGHT - 8, TYPE.Wall, handler, WIDTH, 8)); //Mur du Bas
         hud = new HUD();
-        
-        spawner = new Spawn(handler, hud);
+
+        spawner = new Spawner(handler, hud);
         handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, TYPE.Player, handler));
 
         r = new Random();
@@ -51,8 +47,8 @@ public class WaveGame extends Canvas implements Runnable {
             handler.addObject(new BasicEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), TYPE.BasicEnemy, handler));
         }
 
-        //handler.addObject(new EnemyBoss(WIDTH / 2 - 64, -60, ID.EnemyBoss, handler));
-        //handler.addObject(new SmartEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), ID.SmartEnemy, handler));
+        //handler.addObject(new EnemyBoss(WIDTH / 2 - 64, -60, TYPE.EnemyBoss, handler));
+        //handler.addObject(new SmartEnemy(r.nextInt(WIDTH - 16), r.nextInt(HEIGHT - 16), TYPE.SmartEnemy, handler));
     }
 
     public synchronized void start() {
@@ -90,6 +86,10 @@ public class WaveGame extends Canvas implements Runnable {
         int frames = 0;
         int fps = 0;
 
+        //test
+        int testTick = 0;
+        int testRender = 0;
+
         while (running) {
             render = false;
 
@@ -104,19 +104,28 @@ public class WaveGame extends Canvas implements Runnable {
                 unprocessedTime -= UPDATE_CAP;
                 render = true;
 
+                tick();
+                testTick++;
+
                 if (frameTime >= 1.0) {
                     frameTime = 0;
                     fps = frames;
                     frames = 0;
 
-                    System.out.println("FPS: " + fps);
+                    //System.out.println("FPS: " + fps);
+                    System.err.println("Tick : " + testTick);
+                    System.err.println("Render : " + testRender);
+                    testTick = 0;
+                    testRender = 0;
                 }
             }
 
             if (render) {
                 frames++;
-                tick();
+
                 render();
+                testRender++;
+
             } else {
                 try {
                     Thread.sleep(1);
@@ -176,7 +185,6 @@ public class WaveGame extends Canvas implements Runnable {
         g.fillRect(0, 0, WIDTH, HEIGHT);
         handler.render(g);
         hud.render(g);
-        //screenPlay.render(g);
         g.dispose();
         bs.show();
     }

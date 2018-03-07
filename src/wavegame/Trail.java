@@ -17,13 +17,15 @@ import java.awt.Rectangle;
  */
 public class Trail extends GameObject {
 
+    private Handler handler;
     private float alpha = 1f;
     private float life;
     private Color color;
     private int width, height;
 
     public Trail(float x, float y, TYPE type, Color color, int width, int height, float life, Handler handler) {
-        super(x, y, type, handler);
+        super(x, y, type);
+        this.handler = handler;
         this.color = color;
         this.width = width;
         this.height = height;

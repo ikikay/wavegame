@@ -15,14 +15,14 @@ import java.util.Random;
  * @author ikika
  */
 public class EnemyBossBullet extends GameObject {
-
+    
+    private Handler handler;
     Random r = new Random();
 
     public EnemyBossBullet(float x, float y, TYPE type, Handler handler) {
-        super(x, y, type, handler);
-        this.life = 50;
-        this.dammage = this.life;
+        super(x, y, type);
 
+        this.handler = handler;
         velX = (r.nextInt(5 - -5) + -5);
         velY = 5;
     }
@@ -38,15 +38,10 @@ public class EnemyBossBullet extends GameObject {
         if (y >= WaveGame.HEIGHT) {
             
         }
-        if (y <= 0 || y >= WaveGame.HEIGHT - 47 || x <= 0 || x >= WaveGame.WIDTH - 16) {
+        if (y <= 0 || y >= WaveGame.HEIGHT - 8 || x <= 0 || x >= WaveGame.WIDTH - 8) {
             handler.removeObject(this);
         }
         //handler.addObject(new Trail(x, y, TYPE.Trail, Color.LIGHT_GRAY, 8, 8, 0.02f, handler));
-
-        super.collision();
-        if (life <= 0) {
-            handler.removeObject(this);
-        }
     }
 
     public void render(Graphics g) {

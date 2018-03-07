@@ -15,7 +15,7 @@ public enum TYPE {
     BasicEnemy(),
     FastEnemy(),
     SmartEnemy(),
-    EnemyBoss(),
+    BossEnemy(),
     Wall(),
     Trail();
 }

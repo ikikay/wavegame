@@ -14,16 +14,16 @@ import java.util.Random;
  *
  * @author ikika
  */
-public class EnemyBoss extends GameObject {
-
+public class BossEnemy extends GameObject {
+    
+    private Handler handler;
     Random r = new Random();
     private int timer = 80;
     private int timer2 = 50;
 
-    public EnemyBoss(float x, float y, TYPE type, Handler handler) {
-        super(x, y, type, handler);
-        this.life = 1000;
-        this.dammage = this.life;
+    public BossEnemy(float x, float y, TYPE type, Handler handler) {
+        super(x, y, type);
+        this.handler = handler;
 
         velX = 0;
         velY = 2;
@@ -63,10 +63,7 @@ public class EnemyBoss extends GameObject {
             velX *= -1;
         }
 
-        super.collision();
-        if (life <= 0) {
-            handler.removeObject(this);
-        }
+
     }
 
     public void render(Graphics g) {
